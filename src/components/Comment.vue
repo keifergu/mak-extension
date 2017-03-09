@@ -4,7 +4,7 @@
         <div v-for="item in comments">
           {{item.comment}}
         </div>
-        <input v-model="newComment" @keyup.enter="addComment">
+        <input v-model="newComment" @keyup.enter="addComment" style="width: 90%">
         <input type="submit" name="submit" @click="addComment">
     </div>
 </template>
@@ -83,7 +83,9 @@ export default {
 <style scope>
 .comment{
   position: absolute;
-  width: 150px;
+  top:0;
+  right:0;
+  width: 200px;
   height: 100%;
   background-color: pink;
 }

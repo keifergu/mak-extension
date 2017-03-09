@@ -1,7 +1,7 @@
 <template>
     <div v-show="visibility" class="option" :style="position">
         <button @click="showComment"
-            >=sakkkkkkkkkkk</button>
+            >==</button>
     </div>
 </template>
 
@@ -20,7 +20,7 @@
         mounted() {
             this.$on("visibility", function(status, position) {
                 this.visibility = status;
-                this.pos = position
+                this.pos = status ? position : {};
             })
         },
         computed: {
