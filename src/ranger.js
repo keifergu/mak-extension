@@ -55,4 +55,8 @@ export default class Ranger {
     note() {
       this.highlighter.highlightSelection("note");
     }
+
+    serializeHL() {
+      return this.highlighter.serialize(rangy.getSelection());
+    }
 }
