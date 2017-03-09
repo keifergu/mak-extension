@@ -1,10 +1,12 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import SelectOption from './components/SelectOption'
 import Comment from './components/Comment'
+import SelectOption from './components/SelectOption'
 import App from './App'
-import myselection from './myselection'
+import Ranger from './ranger'
+
+let ranger = new Ranger();
 
 Vue.config.productionTip = false
 localStorage.setItem('debug', 'leancloud*');
@@ -20,20 +22,28 @@ var commentView = new Vue({
 }).$mount();
 
 optionView.$children[0].$on("comment",function(){
+  // 显示评论框并传递selection的文本
   commentView.$children[0].$emit("visibility", true);
-  commentView.$children[0].$emit("text", myselection.text());
+  commentView.$children[0].$emit("text", ranger.text());
+  // 隐藏optionView
   optionView.$children[0].$emit("visibility", false);
+  // 高亮选中的文本
+  ranger.highlight();
 })
 
 
 document.body.appendChild(optionView.$el);
 document.body.appendChild(commentView.$el);
 
-function showOption() {
-  if (myselection.text() == "") {
-    return false;
+function showOption(event) {
+  if (event.target === document.body){
+    return ;
+  }
+  // 如果没有选中文本，则不显示optionView
+  if (ranger.text() == "") {
+    return ;
   } else {
-    let postion = myselection.position();
+    let postion = ranger.position();
     optionView.$children[0].$emit("visibility", true, postion);
   }
 }

@@ -1,5 +1,6 @@
 <template>
     <div v-show="visibility" class="comment">
+      <button @click="changeVisibility">x</button>
         <div>{{text}}</div>
         <div v-for="item in comments">
           {{item.comment}}
@@ -37,7 +38,6 @@ export default {
       queryText.equalTo('text', this.text);
       let query = AV.Query.and(queryUrl, queryText);
       query.find().then((data) => {
-        console.log(data);
         data.forEach((value) => {
           this.comments.push(value.attributes);
         })
@@ -75,6 +75,9 @@ export default {
         this.newComment = _newcomment;
         console.error('false'+error.message);
       })
+    },
+    changeVisibility(){
+      this.visibility = !this.visibility;
     }
   }
 }
