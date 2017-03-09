@@ -6,6 +6,7 @@ const appKey = 'heXMkHNlopCuUXWzYPpnjcRw';
 AV.init({ appId, appKey });
 
 let Comment = AV.Object.extend('Comments');
+let Mark = AV.Object.extend('Marks');
 
 export default {
   comment: {
@@ -24,6 +25,17 @@ export default {
       data.set('url', url);
       data.set('text', text);
       data.set('comment', comment);
+      // 保存数据
+      return data.save()
+    }
+  },
+
+  mark: {
+    add(serialize, text, url) {
+      let data = new Mark();
+      data.set('url', url);
+      data.set('text', text);
+      data.set('serialize', serialize);
       // 保存数据
       return data.save()
     }

@@ -1,11 +1,18 @@
 <template>
     <div v-show="visibility" class="option" :style="position">
+        <button @click="mark">mark</button>
         <button @click="showComment"
-            >==</button>
+            >comment</button>
     </div>
 </template>
 
 <script>
+
+    import Ranger from '../ranger';
+    import storage from '../storage';
+
+    let ranger = new Ranger();
+
     export default {
         name: 'select-option',
         data() {
@@ -34,6 +41,14 @@
         methods: {
             showComment() {
               this.$emit("comment",true);
+            },
+
+            mark() {
+              let res = storage.mark.add(ranger.serializeHL, ranger.text(),window.location.href);
+              res.then((data) => {
+                console.log(data.id);
+              })
+              ranger.highlight();
             }
         }
     }

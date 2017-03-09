@@ -48,7 +48,6 @@ export default class Ranger {
     }
 
     highlight() {
-
       this.highlighter.highlightSelection("highlight");
     }
 
@@ -58,5 +57,13 @@ export default class Ranger {
 
     serializeHL() {
       return this.highlighter.serialize(rangy.getSelection());
+    }
+
+    serializeSelection() {
+      return rangy.serializeSelection();
+    }
+
+    restoreSelection(value) {
+        return rangy.deserializeSelection(value);
     }
 }

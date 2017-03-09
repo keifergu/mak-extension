@@ -29,7 +29,7 @@ optionView.$children[0].$on("comment",function(){
   optionView.$children[0].$emit("visibility", false);
   // 高亮选中的文本
   ranger.highlight();
-  console.log(ranger.serializeHL());
+  console.log(ranger.serializeSelection());
 })
 
 
