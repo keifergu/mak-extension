@@ -19,7 +19,7 @@ export default class Ranger {
       }));
       highlighter.addClassApplier(rangy.createClassApplier("note", {
           ignoreWhiteSpace: true,
-          elementTagName: "span",
+          elementTagName: "a",
           elementProperties: {
               href: "#",
               onclick: function() {

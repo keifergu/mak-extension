@@ -1,22 +1,33 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import Vuex from 'vuex'
+import Store from './store/index'
+
+// 显示组件
 import Comment from './components/Comment'
 import SelectOption from './components/SelectOption'
 import App from './App'
+
+// 托选操作类
 import Ranger from './ranger'
 
-let ranger = new Ranger();
-
+Vue.use(Vuex);
 Vue.config.productionTip = false
+
+let ranger = new Ranger();
+const store = new Vuex.Store(Store);
 localStorage.setItem('debug', 'leancloud*');
 
+// 初始化并挂载显示组件
 var optionView = new Vue({
+    store,
     template: '<SelectOption/>',
     components: { SelectOption }
 }).$mount()
 
 var commentView = new Vue({
+    store,
     template: '<Comment/>',
     components: { Comment }
 }).$mount();
@@ -29,7 +40,6 @@ optionView.$children[0].$on("comment",function(status, serialized){
   optionView.$children[0].$emit("visibility", false);
   // 高亮选中的文本
   ranger.highlight();
-  console.log(ranger.serializeSelection());
 })
 
 
@@ -44,8 +54,12 @@ function showOption(event) {
   if (ranger.text() == "") {
     return ;
   } else {
-    let postion = ranger.position();
-    optionView.$children[0].$emit("visibility", true, postion);
+    let position = ranger.position();
+    store.commit({
+      type: 'changeVisibility',
+      visibility: true,
+      position
+    })
   }
 }
 

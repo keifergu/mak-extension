@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import storage from '../storage';
 
 let Comment = ''
@@ -66,7 +67,14 @@ export default {
     },
     changeVisibility(){
       this.visibility = !this.visibility;
-    }
+    },
+    ...mapState({
+      visibility: ({comment}) => comment.visibility,
+      text: ({comment}) => comment.text,
+      newComment: ({comment}) => comment.newComment,
+      serialize: ({comment}) => comment.serialize,
+      comments: ({comment}) => comment.comments
+    })
   }
 }
 </script>

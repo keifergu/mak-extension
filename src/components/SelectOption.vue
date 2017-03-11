@@ -1,5 +1,5 @@
 <template>
-    <div v-show="visibility" class="option" :style="position">
+    <div v-show="visibility" class="option" :style="pos">
         <button @click="mark">mark</button>
         <button @click="showComment"
             >comment</button>
@@ -8,6 +8,7 @@
 
 <script>
 
+    import { mapState } from 'vuex'
     import Ranger from '../ranger';
     import storage from '../storage';
 
@@ -16,27 +17,23 @@
     export default {
         name: 'select-option',
         data() {
-            return {
-                visibility: false,
-                pos: {
-                    top: 0,
-                    left: 0
-                }
-            };
-        },
-        mounted() {
-            this.$on("visibility", function(status, position) {
-                this.visibility = status;
-                this.pos = status ? position : {};
-            })
+            return {};
         },
         computed: {
-            position() {
-                return {
-                    top: this.pos.top + "px",
-                    left: this.pos.left + "px"
-                };
-            }
+          ...mapState({
+            visibility: state => state.option.visibility,
+
+            position: state => state.option.position
+          }),
+
+          pos() {
+            return {
+                top: this.position.top + "px",
+                left: this.position.left + "px"
+            };
+          }
+
+
         },
         methods: {
             showComment() {
