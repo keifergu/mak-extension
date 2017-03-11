@@ -44,12 +44,14 @@
             },
 
             mark() {
+              // 先进行高亮，然后才可以对高亮进行序列化操作
+              ranger.highlight();
+
               let serialize = ranger.serializeHL();
               let res = storage.mark.add(serialize, ranger.text(),window.location.href);
-              res.then((data) => {
+              res.then( data => {
                 console.log(data.id);
               })
-              ranger.highlight();
             }
         }
     }
