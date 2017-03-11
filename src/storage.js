@@ -38,6 +38,12 @@ export default {
       data.set('serialize', serialize);
       // 保存数据
       return data.save()
+    },
+
+    get(url) {
+      let queryUrl = new AV.Query('Marks');
+      queryUrl.equalTo('url', url);
+      return queryUrl.find()
     }
   }
 }

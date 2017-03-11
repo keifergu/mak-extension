@@ -5,6 +5,8 @@ import rangySerializer from 'rangy/lib/rangy-serializer';
 import rangyClassApplier from 'rangy/lib/rangy-classapplier';
 import rangySaveRestore from 'rangy/lib/rangy-selectionsaverestore';
 
+import storage from './storage';
+
 export default class Ranger {
 
     constructor() {
@@ -59,11 +61,35 @@ export default class Ranger {
       return this.highlighter.serialize(rangy.getSelection());
     }
 
+    deserializeHL(serialized) {
+      if (serialized instanceof Array) {
+        serialized.forEach(value => {
+          this.highlighter.deserialize(value);
+        })
+      } else if (typeof serialized == "string") {
+        this.highlighter.deserialize(serialized);
+      }
+    }
+
     serializeSelection() {
       return rangy.serializeSelection();
     }
 
     restoreSelection(value) {
         return rangy.deserializeSelection(value);
+    }
+
+    showAllMark() {
+      storage.mark.get(window.location.href)
+      .then((data) => {
+        let hashArray = [];
+        data.forEach(value => {
+          hashArray.push(value.attributes.serialize);
+        })
+        return hashArray;
+      })
+      .then(array => {
+        this.deserializeHL(array)
+      })
     }
 }

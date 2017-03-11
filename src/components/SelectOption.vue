@@ -44,7 +44,8 @@
             },
 
             mark() {
-              let res = storage.mark.add(ranger.serializeHL, ranger.text(),window.location.href);
+              let serialize = ranger.serializeHL();
+              let res = storage.mark.add(serialize, ranger.text(),window.location.href);
               res.then((data) => {
                 console.log(data.id);
               })

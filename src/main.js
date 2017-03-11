@@ -57,3 +57,5 @@ new Vue({
     template: '<App/>',
     components: { App }
 })
+
+document.onload = ranger.showAllMark();
