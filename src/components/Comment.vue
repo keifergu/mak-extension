@@ -21,6 +21,7 @@ export default {
       visibility: false,
       text: '',
       newComment: '',
+      serialize: '',
       comments: []
     };
   },
@@ -39,8 +40,9 @@ export default {
     this.$on('visibility', (status) => {
       this.visibility = status;
     });
-    this.$on('text', (text) => {
+    this.$on('note', (text, serialize) => {
       this.text = text;
+      this.serialize = serialize;
     });
   },
   methods: {
@@ -51,7 +53,7 @@ export default {
 
       // 清空输入框
       this.newComment = '';
-      let res = storage.comment.add(this.text, window.location.href, _newcomment);
+      let res = storage.comment.add(this.serialize, this.text, window.location.href, _newcomment);
 
       res.then((data) => {
         console.log(data.id)

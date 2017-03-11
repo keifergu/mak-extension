@@ -21,10 +21,10 @@ var commentView = new Vue({
     components: { Comment }
 }).$mount();
 
-optionView.$children[0].$on("comment",function(){
+optionView.$children[0].$on("comment",function(status, serialized){
   // 显示评论框并传递selection的文本
   commentView.$children[0].$emit("visibility", true);
-  commentView.$children[0].$emit("text", ranger.text());
+  commentView.$children[0].$emit("note", ranger.text(), serialized);
   // 隐藏optionView
   optionView.$children[0].$emit("visibility", false);
   // 高亮选中的文本

@@ -19,14 +19,21 @@ export default {
       return query.find()
     },
 
-    add(text, url, comment) {
+    add(serialize, text, url, comment) {
       // 构建数据储存对象
       let data = new Comment();
+      data.set('serialize', serialize);
       data.set('url', url);
       data.set('text', text);
       data.set('comment', comment);
       // 保存数据
       return data.save()
+    },
+
+    all(url) {
+      let queryNote = new AV.Query('Comments');
+      queryNote.equalTo('url', url);
+      return queryNote.find();
     }
   },
 

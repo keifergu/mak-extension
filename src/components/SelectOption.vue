@@ -40,7 +40,9 @@
         },
         methods: {
             showComment() {
-              this.$emit("comment",true);
+              ranger.note();
+              let serialize = ranger.serializeHL();
+              this.$emit("comment",true, serialize);
             },
 
             mark() {

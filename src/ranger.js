@@ -19,7 +19,7 @@ export default class Ranger {
       }));
       highlighter.addClassApplier(rangy.createClassApplier("note", {
           ignoreWhiteSpace: true,
-          elementTagName: "a",
+          elementTagName: "span",
           elementProperties: {
               href: "#",
               onclick: function() {
@@ -81,15 +81,26 @@ export default class Ranger {
 
     showAllMark() {
       storage.mark.get(window.location.href)
-      .then((data) => {
-        let hashArray = [];
-        data.forEach(value => {
-          hashArray.push(value.attributes.serialize);
+        .then((data) => {
+          let hashArray = [];
+          data.forEach(value => {
+            hashArray.push(value.attributes.serialize);
+          })
+          return hashArray;
         })
-        return hashArray;
-      })
-      .then(array => {
-        this.deserializeHL(array)
-      })
+        .then(array => {
+          this.deserializeHL(array)
+        })
+      storage.comment.all(window.location.href)
+        .then((data) => {
+          let hashArray = [];
+          data.forEach(value => {
+            hashArray.push(value.attributes.serialize);
+          })
+          return hashArray;
+        })
+        .then(array => {
+          this.deserializeHL(array)
+        })
     }
 }
