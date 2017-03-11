@@ -1,19 +1,24 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import Vuex from 'vuex'
-import Store from './store/index'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import MuseUI from 'muse-ui';
+
+import 'muse-ui/dist/muse-ui.css';
 
 // 显示组件
 import Comment from './components/Comment'
 import SelectOption from './components/SelectOption'
 import App from './App'
 
+import Store from './store/index';
+
 // 托选操作类
 import Ranger from './ranger'
 
 Vue.use(Vuex);
-Vue.config.productionTip = false
+Vue.use(MuseUI);
+Vue.config.productionTip = false;
 
 let ranger = new Ranger();
 const store = new Vuex.Store(Store);
@@ -22,14 +27,12 @@ localStorage.setItem('debug', 'leancloud*');
 // 初始化并挂载显示组件
 var optionView = new Vue({
     store,
-    template: '<SelectOption/>',
-    components: { SelectOption }
+    render: h => h(SelectOption)
 }).$mount()
 
 var commentView = new Vue({
     store,
-    template: '<Comment/>',
-    components: { Comment }
+    render: h => h(Comment)
 }).$mount();
 
 optionView.$children[0].$on("comment",function(status, serialized){

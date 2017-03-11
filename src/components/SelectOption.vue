@@ -1,8 +1,9 @@
 <template>
     <div v-show="visibility" class="option" :style="pos">
-        <button @click="mark">mark</button>
-        <button @click="showComment"
-            >comment</button>
+      <mu-icon-button @click="mark" class="mark" icon="book"
+        tooltipPosition="top-center" tooltip="标记"/>
+      <mu-icon-button @click="showComment" icon="assignment" class="comment"
+        tooltipPosition="top-center" tooltip="笔记"/>
     </div>
 </template>
 
@@ -28,7 +29,7 @@
 
           pos() {
             return {
-                top: this.position.top + "px",
+                top: this.position.top + 28 + "px",
                 left: this.position.left + "px"
             };
           }
@@ -59,5 +60,15 @@
 <style scoped>
 .option {
   position: absolute;
+  margin: 0;
+  padding: 0;
+}
+.mark {
+  display: block;
+  float: left;
+}
+.comment {
+  display: block;
+  float: left;
 }
 </style>
