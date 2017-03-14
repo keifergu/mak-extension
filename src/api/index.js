@@ -8,20 +8,24 @@ AV.init({ appId, appKey });
 const Comment = AV.Object.extend('Comments');
 const Mark = AV.Object.extend('Marks');
 const currentUser = AV.User.current();
-console.log(currentUser)
+
 export default {
   user: {
     login() {
       AV.User.logIn('keifer', '123').then(function (loginedUser) {
+        console.log("login info:");
          console.log(loginedUser);
        }, function (error) {
        });
     },
     register() {
+    },
+    info() {
+
     }
   },
   comment: {
-    get(text, url) {
+    get({text, url}) {
       let queryUrl = new AV.Query('Comments');
       let queryText = new AV.Query('Comments');
       queryUrl.equalTo('url', url);

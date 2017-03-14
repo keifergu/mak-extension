@@ -21,39 +21,19 @@
 
 <script>
   import { mapState } from 'vuex';
-  import storage from '../storage';
+  import storage from '../api';
 
   let Comment = ''
   export default {
     name: 'comment',
-    data() {
-      return {
-        visibility: false,
-        text: '',
-        newComment: '',
-        serialize: '',
-        comments: []
-      };
-    },
-    watch: {
-      text: function(){
-        this.comments = [];
-        let result = storage.comment.get(this.text, window.location.href);
-        result.then((data) => {
-          data.forEach((value) => {
-            this.comments.push(value.attributes);
-          })
-        });
-      }
-    },
-    mounted() {
-      this.$on('visibility', (status) => {
-        this.visibility = status;
-      });
-      this.$on('note', (text, serialize) => {
-        this.text = text;
-        this.serialize = serialize;
-      });
+    computed: {
+      ...mapState({
+        text: (state) => state.selectText,
+        visibility: ({comment}) => comment.visibility,
+        newComment: ({comment}) => comment.newComment,
+        serialize: ({comment}) => comment.serialize,
+        comments: ({comment}) => comment.comments
+      })
     },
     methods: {
       addComment(){
@@ -76,14 +56,7 @@
       },
       toggle(){
         this.visibility = !this.visibility;
-      },
-      ...mapState({
-        visibility: ({comment}) => comment.visibility,
-        text: ({comment}) => comment.text,
-        newComment: ({comment}) => comment.newComment,
-        serialize: ({comment}) => comment.serialize,
-        comments: ({comment}) => comment.comments
-      })
+      }
     }
   }
 </script>

@@ -2,16 +2,14 @@
     <div v-show="visibility" class="option" :style="pos">
       <mu-icon-button @click="mark" class="mark" icon="book"
         tooltipPosition="top-center" tooltip="标记"/>
-      <mu-icon-button @click="showComment" icon="assignment" class="comment"
+      <mu-icon-button @click="newComment" icon="assignment" class="comment"
         tooltipPosition="top-center" tooltip="笔记"/>
     </div>
 </template>
 
 <script>
-
     import { mapState } from 'vuex'
     import Ranger from '../ranger';
-    import storage from '../storage';
 
     let ranger = new Ranger();
 
@@ -22,9 +20,8 @@
         },
         computed: {
           ...mapState({
-            visibility: state => state.option.visibility,
-
-            position: state => state.option.position
+            visibility: ({option}) => option.visibility,
+            position: ({option}) => option.position
           }),
 
           pos() {
@@ -33,29 +30,32 @@
                 left: this.position.left + "px"
             };
           }
-
-
         },
         methods: {
-            showComment() {
+            newComment() {
               ranger.note();
               let serialize = ranger.serializeHL();
-              this.$emit("comment",true, serialize);
-              this.$store.commit({
-                type: "mark"
+              let noteData = {
+                text: ranger.text(),
+                url: window.location.href
+              }
+              this.$store.dispatch({
+                type: "showComment",
+                ...noteData
               })
             },
 
             mark() {
               // 先进行高亮，然后才可以对高亮进行序列化操作
               ranger.highlight();
-              this.$store.commit({
-                type: "mark"
-              })
-              let serialize = ranger.serializeHL();
-              let res = storage.mark.add(serialize, ranger.text(),window.location.href);
-              res.then( data => {
-                console.log(data.id);
+              let markData = {
+                serialize: ranger.serializeHL(),
+                text: ranger.text(),
+                url: window.location.href
+              }
+              this.$store.dispatch({
+                type: "addMark",
+                ...markData
               })
             }
         }

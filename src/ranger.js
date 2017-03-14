@@ -5,7 +5,7 @@ import rangySerializer from 'rangy/lib/rangy-serializer';
 import rangyClassApplier from 'rangy/lib/rangy-classapplier';
 import rangySaveRestore from 'rangy/lib/rangy-selectionsaverestore';
 
-import storage from './storage';
+import storage from './api';
 
 export default class Ranger {
 

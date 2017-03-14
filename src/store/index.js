@@ -1,3 +1,9 @@
+import api from '../api'
+import * as actions from './actions'
+import * as getters from './getters'
+import * as types from './mutation-types'
+import mutations from './mutations'
+
 const option = {
   state: {
     visibility: false,
@@ -7,12 +13,11 @@ const option = {
     }
   },
   mutations: {
-    changeVisibility(state, payload) {
-      state.visibility = payload.visibility;
-      state.position = payload.position;
+    [types.CHANGE_OPTION_STATUS](state, payload) {
+      state.visibility = payload.status;
     },
-    mark(state, payload) {
-      state.visibility = false;
+    [types.ADD_MARK_SUCCESS]() {
+      ;
     }
   }
 }
@@ -26,23 +31,43 @@ const comment = {
     comments: []
   },
   mutations: {
-    changeVisibility(state, payload) {
-      state.visibility = payload.visibility;
+    [types.FETCH_COMMENT_SUCCESSS](state, payload) {
+      state.comments = payload.comments;
     },
 
-    changeInput(state, payload) {
-      state.newComment = payload.newComment;
-    },
-
-    showComment(state, payload) {
-      state.visibility = false;
+    [types.FETCH_COMMENT_FAILURES](state, payload) {
+      // state.newComment = payload.newComment;
     }
   }
 }
 
-export default {
+const state = {
+  selectText: ''
+}
+
+const store = {
+  state,
+  getters,
+  actions,
+  mutations,
   modules: {
     option,
     comment
   }
 }
+
+if (module.hot) {
+  module.hot.accept([
+    './getters',
+    './actions',
+    './mutations'
+  ], () => {
+    store.hotUpdate({
+      getters: require('./getters').default,
+      actions: require('./actions').default,
+      mutations: require('./mutations').default
+    })
+  })
+}
+
+export default store
