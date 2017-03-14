@@ -21,6 +21,7 @@
 
 <script>
   import { mapState } from 'vuex';
+  import * as types from '../store/mutation-types';
   import storage from '../api';
 
   let Comment = ''
@@ -55,7 +56,10 @@
         })
       },
       toggle(){
-        this.visibility = !this.visibility;
+        this.$store.commit({
+          type: types.CHANGE_COMMENT_STATUS,
+          status: false
+        })
       }
     }
   }

@@ -30,6 +30,10 @@ const comment = {
     comments: []
   },
   mutations: {
+    [types.CHANGE_COMMENT_STATUS](state, payload) {
+      state.visibility = payload.status;
+    },
+
     [types.FETCH_COMMENTS_SUCCESSS](state, payload) {
       state.comments = payload.comments;
     },
