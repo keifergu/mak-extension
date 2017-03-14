@@ -15,21 +15,11 @@ export default class Ranger {
       highlighter = rangy.createHighlighter();
       highlighter.addClassApplier(rangy.createClassApplier("highlight", {
           ignoreWhiteSpace: true,
-          tagNames: ["span", "a"]
+          tagNames: ["span"]
       }));
       highlighter.addClassApplier(rangy.createClassApplier("note", {
           ignoreWhiteSpace: true,
-          elementTagName: "a",
-          elementProperties: {
-              href: "#",
-              onclick: function() {
-                  var highlight = highlighter.getHighlightForElement(this);
-                  if (window.confirm("Delete this note (ID " + highlight.id + ")?")) {
-                      highlighter.removeHighlights( [highlight] );
-                  }
-                  return false;
-              }
-          }
+          elementTagName: "span"
       }));
 
       this.highlighter = highlighter;

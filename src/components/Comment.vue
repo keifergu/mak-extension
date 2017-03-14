@@ -8,10 +8,10 @@
         <mu-content-block>{{text}}</mu-content-block>
         <mu-divider />
         <mu-sub-header>笔记</mu-sub-header>
-        <mulist v-for="item in comments">
+        <mu-list v-for="(item, index) in comments" :key="index">
           <mu-list-item :title="item.comment" />
           <mu-divider />
-        </mulist>
+        </mu-list>
         <div @keyup.enter="addComment" >
           <mu-text-field label="笔记" v-model="newComment" class="input" labelFloat/>
           <mu-icon-button icon="send" @click="addComment" class="submit"/>

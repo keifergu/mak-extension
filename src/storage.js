@@ -5,10 +5,21 @@ const appKey = 'heXMkHNlopCuUXWzYPpnjcRw';
 
 AV.init({ appId, appKey });
 
-let Comment = AV.Object.extend('Comments');
-let Mark = AV.Object.extend('Marks');
-
+const Comment = AV.Object.extend('Comments');
+const Mark = AV.Object.extend('Marks');
+const currentUser = AV.User.current();
+console.log(currentUser)
 export default {
+  user: {
+    login() {
+      AV.User.logIn('keifer', '123').then(function (loginedUser) {
+         console.log(loginedUser);
+       }, function (error) {
+       });
+    },
+    register() {
+    }
+  },
   comment: {
     get(text, url) {
       let queryUrl = new AV.Query('Comments');
@@ -22,6 +33,7 @@ export default {
     add(serialize, text, url, comment) {
       // 构建数据储存对象
       let data = new Comment();
+      data.set('user', currentUser.id);
       data.set('serialize', serialize);
       data.set('url', url);
       data.set('text', text);
@@ -40,6 +52,7 @@ export default {
   mark: {
     add(serialize, text, url) {
       let data = new Mark();
+      data.set('user', currentUser.id);
       data.set('url', url);
       data.set('text', text);
       data.set('serialize', serialize);

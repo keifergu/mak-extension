@@ -41,12 +41,17 @@
               ranger.note();
               let serialize = ranger.serializeHL();
               this.$emit("comment",true, serialize);
+              this.$store.commit({
+                type: "mark"
+              })
             },
 
             mark() {
               // 先进行高亮，然后才可以对高亮进行序列化操作
               ranger.highlight();
-
+              this.$store.commit({
+                type: "mark"
+              })
               let serialize = ranger.serializeHL();
               let res = storage.mark.add(serialize, ranger.text(),window.location.href);
               res.then( data => {

@@ -15,14 +15,14 @@ import Store from './store/index';
 
 // 托选操作类
 import Ranger from './ranger'
-
+import storage from './storage'
 Vue.use(Vuex);
 Vue.use(MuseUI);
 Vue.config.productionTip = false;
 
 let ranger = new Ranger();
 const store = new Vuex.Store(Store);
-localStorage.setItem('debug', 'leancloud*');
+localStorage.setItem('debug', 'false');
 
 // 初始化并挂载显示组件
 var optionView = new Vue({
@@ -75,4 +75,8 @@ new Vue({
     components: { App }
 })
 
-document.onload = ranger.showAllMark();
+document.onload = function() {
+  ranger.showAllMark();
+  storage.user.register();
+  storage.user.login();
+}()

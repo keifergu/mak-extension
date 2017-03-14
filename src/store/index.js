@@ -10,6 +10,9 @@ const option = {
     changeVisibility(state, payload) {
       state.visibility = payload.visibility;
       state.position = payload.position;
+    },
+    mark(state, payload) {
+      state.visibility = false;
     }
   }
 }
@@ -30,6 +33,10 @@ const comment = {
     changeInput(state, payload) {
       state.newComment = payload.newComment;
     },
+
+    showComment(state, payload) {
+      state.visibility = false;
+    }
   }
 }
 
