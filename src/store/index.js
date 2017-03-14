@@ -26,18 +26,29 @@ const comment = {
   state: {
     visibility: false,
     text: '',
-    newComment: '',
     serialize: '',
     comments: []
   },
   mutations: {
-    [types.FETCH_COMMENT_SUCCESSS](state, payload) {
+    [types.FETCH_COMMENTS_SUCCESSS](state, payload) {
       state.comments = payload.comments;
     },
 
-    [types.FETCH_COMMENT_FAILURES](state, payload) {
+    [types.FETCH_COMMENTS_FAILURES](state, payload) {
       // state.newComment = payload.newComment;
-    }
+    },
+
+    [types.ADD_COMMENT](state, comment) {
+      state.comments.push(comment)
+    },
+
+    [types.ADD_COMMENT_SUCCESS](state, comment) {
+      ;
+    },
+
+    [types.ADD_COMMENT_FAILURE](state, comment) {
+      state.comments.pop();
+    },
   }
 }
 

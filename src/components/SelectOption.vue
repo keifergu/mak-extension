@@ -34,10 +34,10 @@
         methods: {
             newComment() {
               ranger.note();
-              let serialize = ranger.serializeHL();
               let noteData = {
                 text: ranger.text(),
-                url: window.location.href
+                url: window.location.href,
+                serialize: ranger.serializeHL()
               }
               this.$store.dispatch({
                 type: "showComment",

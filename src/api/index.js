@@ -34,7 +34,7 @@ export default {
       return query.find()
     },
 
-    add(serialize, text, url, comment) {
+    add({serialize, text, url, comment}) {
       // 构建数据储存对象
       let data = new Comment();
       data.set('user', currentUser.id);

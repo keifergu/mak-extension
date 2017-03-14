@@ -13,10 +13,21 @@ export const addMark = ({commit}, mark) => {
 }
 
 export const showComment = ({commit, state}, note) => {
-  commit(types.NEW_NOTE);
+  commit(types.NEW_NOTE,note);
   api.comment.get(note)
   .then(data => {
     let comments = data.map(item => item.attributes);
-    commit(types.FETCH_COMMENT_SUCCESSS,{comments})
+    commit(types.FETCH_COMMENTS_SUCCESSS,{comments})
+  })
+}
+
+export const addComment = ({commit, state}, comment) => {
+  commit(types.ADD_COMMENT,comment)
+  api.comment.add(comment)
+  .then(data => {
+    commit(types.ADD_COMMENT_SUCCESS,comment)
+  })
+  .catch(err => {
+    commit(types.ADD_COMMENT_FAILURE,comment)
   })
 }

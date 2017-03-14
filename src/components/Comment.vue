@@ -26,32 +26,32 @@
   let Comment = ''
   export default {
     name: 'comment',
+    data() {
+      return {
+        newComment: ''
+      }
+    },
     computed: {
       ...mapState({
         text: (state) => state.selectText,
         visibility: ({comment}) => comment.visibility,
-        newComment: ({comment}) => comment.newComment,
         serialize: ({comment}) => comment.serialize,
         comments: ({comment}) => comment.comments
       })
     },
     methods: {
       addComment(){
-        let _newcomment = this.newComment;
-        // 乐观更新
-        this.comments.push({comment:_newcomment});
-
-        // 清空输入框
-        this.newComment = '';
-        let res = storage.comment.add(this.serialize, this.text, window.location.href, _newcomment);
-
-        res.then((data) => {
-          console.log(data.id)
-        }, (error)=>{
-          // 保存失败时删除最后的一个comment
-          this.comments.pop();
-          this.newComment = _newcomment;
-          console.error('false'+error.message);
+        let _newcomment = this.newComment
+        this.newComment = ''
+        let commentData = {
+          serialize: this.serialize,
+          selectText: this.text,
+          url: window.location.href,
+          comment: _newcomment
+        }
+        this.$store.dispatch({
+          type: 'addComment',
+          ...commentData
         })
       },
       toggle(){

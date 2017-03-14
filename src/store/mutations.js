@@ -6,7 +6,8 @@ export default {
     state.selectText = payload.text;
     state.option.position = payload.position;
   },
-  [types.NEW_NOTE](state) {
+  [types.NEW_NOTE](state, note) {
+    state.comment.serialize = note.serialize;
     state.comment.visibility = true;
     state.option.visibility = false;
   }
