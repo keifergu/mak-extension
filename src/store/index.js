@@ -18,6 +18,9 @@ const option = {
     },
     [types.ADD_MARK_SUCCESS]() {
       ;
+    },
+    [types.ADD_MARK_FAILURE]() {
+      ;
     }
   }
 }

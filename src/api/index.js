@@ -54,7 +54,7 @@ export default {
   },
 
   mark: {
-    add(serialize, text, url) {
+    add({serialize, text, url}) {
       let data = new Mark();
       data.set('user', currentUser.id);
       data.set('url', url);

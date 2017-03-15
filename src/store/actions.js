@@ -8,7 +8,7 @@ export const addMark = ({commit}, mark) => {
     commit(types.ADD_MARK_SUCCESS)
   })
   .catch(err => {
-    commit(types.ADD_MARK_FAILURE)
+    commit(types.ADD_MARK_FAILURE, err)
   })
 }
 
